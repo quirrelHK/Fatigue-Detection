@@ -52,6 +52,9 @@ Training model for embeddings extracted from entire face of a person leads to ov
 Instead of extracting embeddings from the entire face we can restrict our ROI to 6 key regions namely, left and right eye, left and right under-eye, nose and mouth.
 Then we can train separate models for each of the embeddings extracted from these regions. We can use this ensemble technique to perform a majority voting based on some criteria to avoid overfitting.
 
+## Models
+Download the trained models from [here](https://drive.google.com/file/d/1uryueQd7dXcc2f9EyX09vZ8mX_UEBEyI/view?usp=sharing).
+
 
 
 
