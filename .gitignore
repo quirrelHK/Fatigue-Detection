@@ -142,3 +142,6 @@ shape_predictor_68_face_landmarks.dat
 
 models.rar
 
+
+utils_test.py
+test.py

@@ -27,9 +27,9 @@ def extract(save_dir, target_image):
         os.makedirs(os.path.join(save_dir,k),exist_ok=True)
     # for num,filename in enumerate(os.listdir(args['image']), start=1):
     try:
-        filename=target_image.split('/')[-1]
+        filename=target_image.split('\\')[-1]
         filename=filename.split('.')[0]
-        print(filename)
+        # print(filename)
         image=cv2.imread(target_image)
         image = imutils.resize(image, width=500)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -56,7 +56,10 @@ def extract(save_dir, target_image):
             
                 # counter[name] = counter.get(name)+1
                 # cv2.imwrite(os.path.join(save_dir,f'{name}',f'{counter}.jpg'), roi)
-                cv2.imwrite(os.path.join(save_dir,f'{name}',f'{filename}.jpg'), roi)
+                path=os.path.join(save_dir,f'{name}')
+                os.makedirs(path,exist_ok=True)
+                path = os.path.join(path,f'{filename}.jpg')
+                cv2.imwrite(path, roi)
                 
                 if name == 'nose':
                     nose_box.append((x,y,w,h))
@@ -71,7 +74,11 @@ def extract(save_dir, target_image):
         
                     # counter[name] = counter.get(name)+1
                     # cv2.imwrite(os.path.join(save_dir,f'{name}',f'{counter[name]}.jpg'), roi2)
-                    cv2.imwrite(os.path.join(save_dir,f'{name}',f'{filename}.jpg'), roi)
+                    # cv2.imwrite(os.path.join(save_dir,f'{name}',f'{filename}.jpg'), roi)
+                    path=os.path.join(save_dir,f'{name}')
+                    os.makedirs(path,exist_ok=True)
+                    path = os.path.join(path,f'{filename}.jpg')
+                    cv2.imwrite(path, roi)
 
                 
                 if name=='right_eye':
@@ -84,7 +91,11 @@ def extract(save_dir, target_image):
 
                     # counter[name] = counter.get(name)+1
                     # cv2.imwrite(os.path.join(save_dir,f'{name}',f'{counter[name]}.jpg'), roi2)
-                    cv2.imwrite(os.path.join(save_dir,f'{name}',f'{filename}.jpg'), roi)
+                    # cv2.imwrite(os.path.join(save_dir,f'{name}',f'{filename}.jpg'), roi)
+                    path=os.path.join(save_dir,f'{name}')
+                    os.makedirs(path,exist_ok=True)
+                    path = os.path.join(path,f'{filename}.jpg')
+                    cv2.imwrite(path, roi)
         return filename+'.jpg'
 
     except Exception as e:
