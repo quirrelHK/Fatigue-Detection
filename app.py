@@ -49,6 +49,7 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    avg_prediction=None
     models = load_models()
     test_dir = os.path.join('models', 'test')
     features = ['jaw', 'left_eye', 'left_undereye', 'mouth', 'nose', 'right_eye', 'right_undereye']
@@ -71,14 +72,6 @@ def predict():
     
         for feature in features:
             file = os.path.join(test_dir, feature, filename)
-            # print(file,models[feature][1])
-        
-            # img = image.load_img(file, target_size=IMG_SIZE)    
-            # img = image.img_to_array(img)
-            # img = img / 255.0
-            # img = np.expand_dims(img, axis=0)
-
-            # pred[models[feature][1]].append(models[feature][0](img))
             prediction = predict_class(models[feature][0],file)
             pred[models[feature][1]].append(prediction)           
         # print(pred)
@@ -86,6 +79,7 @@ def predict():
     
     
         predictions = {}
+        pred_cnt = [0,0]
         for key,value in pred.items():
             if len(value) > 1:
                 # predictions.append([np.average(value)])
@@ -95,16 +89,22 @@ def predict():
             else:
                
                 predictions[key] = value
+            if predictions[key][0] > 0.5:
+                pred_cnt[1]+=1
+            else:
+                pred_cnt[0]+=1
         
-        
+        print(predictions)
         avg_prediction = [x for x in predictions.values()]
+        
         avg_prediction = np.average(avg_prediction)
+        cnt = 1 if pred_cnt[1] > pred_cnt[0] else 0
         
     except Exception as e:
         print(e)
     
     
-    return render_template('result.html', prediction=avg_prediction)
+    return render_template('result.html', prediction=avg_prediction, pred_cnt=cnt)
 
 
 if __name__ =='__main__':

@@ -78,7 +78,7 @@ def extract(save_dir, target_image):
                     path=os.path.join(save_dir,f'{name}')
                     os.makedirs(path,exist_ok=True)
                     path = os.path.join(path,f'{filename}.jpg')
-                    cv2.imwrite(path, roi)
+                    cv2.imwrite(path, roi2)
 
                 
                 if name=='right_eye':
@@ -95,7 +95,7 @@ def extract(save_dir, target_image):
                     path=os.path.join(save_dir,f'{name}')
                     os.makedirs(path,exist_ok=True)
                     path = os.path.join(path,f'{filename}.jpg')
-                    cv2.imwrite(path, roi)
+                    cv2.imwrite(path, roi2)
         return filename+'.jpg'
 
     except Exception as e:
