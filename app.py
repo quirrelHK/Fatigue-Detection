@@ -1,12 +1,21 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, flash, redirect
+from werkzeug.utils import secure_filename
 from utils import extract
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
 import keras.utils as image
 from keras.models import load_model
 import os
 
-app = Flask(__name__)
+UPLOAD_FOLDER = os.path.join('staticFiles','uploads')
+ALLOWED_EXTENSIONS = set(['jpg','jpeg'])
+os.makedirs(UPLOAD_FOLDER,exist_ok=True)
+
+
+app = Flask(__name__, static_folder='staticFiles')
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.secret_key = "This is the secret key"
+
 
 def load_models():
     model_eye_path = os.path.join('models', 'eye', 'eye.h5')
@@ -33,6 +42,9 @@ def load_models():
     
     return models
 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 def predict_class(model,file):
     IMG_SIZE = (224, 224)
@@ -49,17 +61,28 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+   
+    uploaded_img = request.files['image']
+
+    
+    if uploaded_img and not allowed_file(uploaded_img.filename):
+        flash('Please select a valid file type')
+        return redirect('http://127.0.0.1:5000/')
+
+    
     avg_prediction=None
+    cnt=None
     models = load_models()
     test_dir = os.path.join('models', 'test')
     features = ['jaw', 'left_eye', 'left_undereye', 'mouth', 'nose', 'right_eye', 'right_undereye']
     
-    
-    img_file = request.files['image']
-    os.makedirs(test_dir,exist_ok=True)
-    img_path = os.path.join(test_dir, 'temp.jpg')
-    img_file.save(img_path)
-    
+    img_filename = secure_filename(uploaded_img.filename)
+    uploaded_img.save(os.path.join(app.config['UPLOAD_FOLDER'],img_filename))
+    session['uploaded_img_file_path'] = os.path.join(app.config['UPLOAD_FOLDER'],img_filename)
+
+    img_file_path = session.get('uploaded_img_file_path',None)
+   
+
     pred = {'jaw':[],
             'mouth':[],
             'undereye':[],
@@ -67,23 +90,24 @@ def predict():
             'nose':[]}
  
     try:
-        # print(test_dir,img_path)
-        filename = extract(save_dir=test_dir, target_image=img_path)
+        filename = extract(save_dir=test_dir, target_image=img_file_path)
     
         for feature in features:
             file = os.path.join(test_dir, feature, filename)
+            if not os.path.isfile(file):
+                continue
             prediction = predict_class(models[feature][0],file)
             pred[models[feature][1]].append(prediction)           
-        # print(pred)
+     
                
     
     
         predictions = {}
         pred_cnt = [0,0]
+        # print(pred)
         for key,value in pred.items():
             if len(value) > 1:
-                # predictions.append([np.average(value)])
-                # pred[key] = np.average(value)
+              
                 predictions[key] = [np.average(value)]
                 
             else:
@@ -103,9 +127,10 @@ def predict():
     except Exception as e:
         print(e)
     
-    
-    return render_template('result.html', prediction=avg_prediction, pred_cnt=cnt)
+
+    return render_template('result.html', prediction=avg_prediction, pred_cnt=cnt, user_image=img_file_path)
+
 
 
 if __name__ =='__main__':
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
