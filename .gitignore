@@ -147,3 +147,5 @@ utils_test.py
 test.py
      
 staticFiles/
+
+templates/result1.html

@@ -66,7 +66,7 @@ def predict():
 
     
     if uploaded_img and not allowed_file(uploaded_img.filename):
-        flash('Please select a valid file type')
+        flash('Please select a valid file type (jpg or jpeg)')
         return redirect('http://127.0.0.1:5000/')
 
     

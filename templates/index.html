@@ -2,26 +2,75 @@
 <html>
 <head>
     <title>Fatigue Prediction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap" rel="stylesheet">
     <style>
       html{
           background-color: black;
-
+          font-family: 'Lato', sans-serif;
+          position: absolute;
+          top: 20%;
+          left: 50%;
+          transform: translate(-50%, -50%);
       }
-
-      h1,p,input{
+      h1{    
+        font-size: 65px;
+    color: seashell;
+    position: relative;
+    bottom: 75px;
+      }
+      
+      h2{
+        color: seashell;
+    top: 80px;
+    position: relative;
+    left: -24px;
+    /* bottom: 2px; */
+    margin: 0px 0px 18px 1px;
+      }
+      input{
+        position: relative;
+    left: -21px;
+    top: 95px;
+}
+  
+      p,input{
           color: deeppink;
+          font-family: 'GFS Didot', serif;
+          font-size: 20px;
       }
+      .text{
+        width: 650px;
+    position: absolute;
+    left: -2%;
+    top: 42px;
+      }
+    .message{
+      width: 650px;
+      position: absolute;
+      left: -2%;
+      top: 350px;
+    }
     </style>
 </head>
 <body>
     <h1>Fatigue Prediction</h1>
-    <p>
+    <p class="text">Long term fatigue may develop into chronic syndrome and eventually harm a person's physical and mental health.
+      Some system needs to be designed to assess tiredness of a person to avoid short term fatigue to be developed into chronic fatigue.
+      Many system exists to detect short term fatigue in a person but most use only eye aperture as a criteria to assess levels of fatigue 
+      which might be good for detecting driver drowsiness but, performs poorly in detecting long term fatigue.</p>
+    <p class="message">
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             {{ messages }}
           {% endif %}
         {% endwith %}
     </p>
+    <h2>Upload file:</h2>
     <form action="/predict" method="POST" enctype="multipart/form-data">
         <input id="jpeg" type="file" name="image" accept="image/jpeg,image/jpg" required>
         <input type="submit" value="Predict">

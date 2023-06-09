@@ -2,51 +2,169 @@
 <html>
 <head>
     <title>Fatigue Prediction Result</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap" rel="stylesheet">
     <style>
-
         html{
             background-color: #000000;
             align-items: center;
+            font-family: 'Lato', sans-serif;
         }
-        img,h1,p{
+        h1{
+            color: seashell;
+            font-size: 60px;
+            /* display: inline; */
+        }
+        img,p{
             color: deeppink;
+            font-size: 20px;
+            font-family: 'GFS Didot', serif;
         }
         img{
-            border: 1px solid white;
-            position: relative;
-            width: 350px;
-            height: 350px;
+            border: 1px solid seashell;
+           
         }
+        #predictwq{
+            color:seashell; 
+        }
+        #predict{
+            color:seashell; 
+        }
+        .fatigue-result{
 
+            color: seashell;
+            font-size: 60px;
+           
+        }
     </style>
-
-    
 </head>
 <body>
     <h1>Fatigue Prediction Result</h1>
     <img src="{{ user_image }}" alt="Italian Trulli" >
-    <p>The predicted fatigue level is: {{ prediction }}</p>
-    <p id="div1">The majority voting is: <span id="predict">{{ pred_cnt }}</span></p>
-    <script>
-        let a=document.getElementById("predict").innerHTML;
-        console.log(a);
-        let b=parseInt(a);
-        console.log(b);
-        if (b==0) {
-            const para = document.createElement("p");
-            const node = document.createTextNode("You Are Absolutly Fine ");
-            para.appendChild(node);
-            const element = document.getElementById("div1");
-            element.appendChild(para);
-        } else if(b==1) {
-            const para = document.createElement("p");
-            const node = document.createTextNode("Need Break");
-            para.appendChild(node);
-            const element = document.getElementById("div1");
-            element.appendChild(para);
+    <!-- {{ prediction }} -->
+    <p >The predicted fatigue level is:<span id="predictwq">{{ prediction }}</span></p>
+    <div id="div1">
+    <p id="p1">The majority voting is: <span id="predict">{{ pred_cnt }}</span></p>
+</div>
+<script>
+
+    let pred=document.getElementById("predictwq").innerHTML;
+    let k=(String(pred));
+    let q=k.split("[");
+    let w=q[2].split("]")[0];
+    let s=document.getElementById("predictwq")
+    s.innerHTML=w;
+
+    let a=document.getElementById("predict");
+    // console.log(a.value);
+    let c=a.innerHTML;
+    console.log(c);
+    let b=parseInt(c);
+    if (b==0) {
+        const para = document.createElement("p");
+        // const node = document.createTextNode("You Are Absolutly Fine");
+        const node =document.createElement("p");
+        node.innerHTML="You are well rested and raring to go";
+        node.style.fontFamily="GFS Didot, serif"
+        para.appendChild(node);
+        const element = document.getElementById("div1");
+        element.appendChild(para);
+    } 
+    else if(b==1) {
+        
+        // const container=document.createElement("div")
+        const para = document.createElement("p");
+
+        const deprived = document.createElement("h1");
+        deprived.innerHTML="Deprived!!";
+
+        const heading=document.createElement("h1");
+        heading.id="::heading"
+        heading.innerHTML="Effects-:"
+        heading.style.color="seashell"
+        
+        console.log(heading);
+        
+        
+        
+        
+        const node = document.createTextNode("Maintain a consistent sleep schedule and create a sleep-friendly environment");
+        
+        
+        const element = document.getElementById("p1");
+        
+        const container = document.getElementById("div1");
+        container.appendChild(deprived)
+        container.appendChild(heading) // Added precaution ............
+        // para.appendChild(node);
+        element.appendChild(para);
+
+
+        const a=["Decreased cognitive function","Mood disturbances","Reduced physical performance","Weakened immune system","Increased risk of accidents"]
+        const tbl = document.createElement('ul');
+        tbl.style.fontFamily="GFS Didot, serif"
+        tbl.style.width = '100px';
+        //   tbl.style.border = '1px solid deeppink';
+        tbl.style.color='deeppink'
+        tbl.style.fontSize="20px"
+        tbl.style.display="inline"
+        //   left: 41px;
+            tbl.style.position="relative"
+            tbl.style.left="20px"
+            tbl.style.bottom="33px"
+        for (let i = 0; i < a.length; i++) {
+            const e = a[i];
+            const appnd=document.createElement("li")
+
+            appnd.innerHTML=a[i];
+            tbl.appendChild(appnd)
+
         }
-    </script>
+    
+            container.appendChild(tbl)
+
+            const heading2=document.createElement("h1");
+                    heading2.id="::heading"
+                    heading2.innerHTML="Tips-:"
+                    heading2.style.color="seashell";
+            container.append(heading2)
+
+        const a2=["Maintain a consistent sleep schedule and create a sleep-friendly environment",
+        "Limit caffeine and stimulant intake, especially in the evening",
+        "Avoid large meals and alcohol close to bedtime",
+        "Engage in regular exercise during the day, but avoid exercising too close to bedtime",
+        "Practice relaxation techniques, such as deep breathing or meditation, before bedtime",
+        "Manage stress through healthy coping mechanisms, such as hobbies or seeking support",
+        "Avoid late-day napping or limit it to short, early afternoon sessions"]
+        const tb = document.createElement('ul');
+        tb.style.fontFamily="GFS Didot, serif"
+        tb.style.width = '100px';
+        //   tbl.style.border = '1px solid deeppink';
+        tb.style.color='deeppink'
+        tb.style.fontSize="20px"
+        tb.style.display="inline"
+        //   left: 41px;
+            tb.style.position="relative"
+            tb.style.left="20px"
+            tb.style.bottom="33px"
+        for (let i = 0; i < a.length; i++) {
+            const e = a2[i];
+            const appnd=document.createElement("li")
+
+            appnd.innerHTML=a2[i];
+            tb.appendChild(appnd)
+
+        }
+    
+            container.appendChild(tb)
+
+    }
+
+</script>
 
 </body>
 </html>
