@@ -2,6 +2,16 @@
 <html>
 <head>
     <title>Fatigue Prediction</title>
+    <style>
+      html{
+          background-color: black;
+
+      }
+
+      h1,p,input{
+          color: deeppink;
+      }
+    </style>
 </head>
 <body>
     <h1>Fatigue Prediction</h1>
@@ -13,7 +23,7 @@
         {% endwith %}
     </p>
     <form action="/predict" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*" required>
+        <input id="jpeg" type="file" name="image" accept="image/jpeg,image/jpg" required>
         <input type="submit" value="Predict">
     </form>
 </body>

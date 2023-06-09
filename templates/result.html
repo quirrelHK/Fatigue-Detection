@@ -2,12 +2,51 @@
 <html>
 <head>
     <title>Fatigue Prediction Result</title>
+
+    <style>
+
+        html{
+            background-color: #000000;
+            align-items: center;
+        }
+        img,h1,p{
+            color: deeppink;
+        }
+        img{
+            border: 1px solid white;
+            position: relative;
+            width: 350px;
+            height: 350px;
+        }
+
+    </style>
+
     
 </head>
 <body>
     <h1>Fatigue Prediction Result</h1>
     <img src="{{ user_image }}" alt="Italian Trulli" >
     <p>The predicted fatigue level is: {{ prediction }}</p>
-    <p>The majority voting is: {{ pred_cnt }}</p>
+    <p id="div1">The majority voting is: <span id="predict">{{ pred_cnt }}</span></p>
+    <script>
+        let a=document.getElementById("predict").innerHTML;
+        console.log(a);
+        let b=parseInt(a);
+        console.log(b);
+        if (b==0) {
+            const para = document.createElement("p");
+            const node = document.createTextNode("You Are Absolutly Fine ");
+            para.appendChild(node);
+            const element = document.getElementById("div1");
+            element.appendChild(para);
+        } else if(b==1) {
+            const para = document.createElement("p");
+            const node = document.createTextNode("Need Break");
+            para.appendChild(node);
+            const element = document.getElementById("div1");
+            element.appendChild(para);
+        }
+    </script>
+
 </body>
 </html>
