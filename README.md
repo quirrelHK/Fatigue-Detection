@@ -1,6 +1,18 @@
 # Fatigue-Detection
 This is a personal project that aims to detect levels of fatigue in a person using facial data. 
 
+### Home Screen
+![Home Page](https://github.com/quirrelHK/Fatigue-Detection/blob/main/results/home.png)
+
+### Example 1
+![Example 1](https://github.com/quirrelHK/Fatigue-Detection/blob/main/results/res1.jpg)
+
+### Example 2-1
+![Example 2-1](https://github.com/quirrelHK/Fatigue-Detection/blob/main/results/res2-1.jpg)
+
+### Example 2-2
+![Example 2-2](https://github.com/quirrelHK/Fatigue-Detection/blob/main/results/res2-2.jpg)
+
 ## Description
 Long-term fatigue may develop into chronic syndrome and eventually harm a person's physical and mental health. Some system needs to be designed to assess the tiredness of a person to avoid short-term fatigue to be developed into chronic fatigue. Many systems exist to detect short-term fatigue in a person but most use only eye aperture as a criterion to assess levels of fatigue which might be good for detecting driver drowsiness but, performs poorly in detecting long-term fatigue.
 
